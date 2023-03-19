@@ -3,7 +3,7 @@
 import sys
 from settings import *  # обращаемся к нашему файлу settings.py
 from map import *  # обращаемся к нашему файлу map.py
-
+from player import *  # обращаемся к нашему файлу player.py
 
 class Game:
     """
@@ -23,6 +23,7 @@ class Game:
         :return:
         """
         self.map = Map(self)  # вызываем карту
+        self.player = Player(self)  # обратимся к классу Player
 
     def update(self):
         """
@@ -30,6 +31,7 @@ class Game:
         Отображаем в нём текущее количество кадров.
         :return:
         """
+        self.player.update()  # обратимся к классу Player
         pg.display.flip()
         self.delta_time = self.clock.tick(FPS)  # обратимся к переменной из settings.py
         pg.display.set_caption(f'{self.clock.get_fps() :.1f}')
@@ -41,6 +43,7 @@ class Game:
         """
         self.screen.fill('black')  # черный экран
         self.map.draw()
+        self.player.draw()  # обратимся к классу Player
 
     def check_events(self):
         """

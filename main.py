@@ -1,25 +1,28 @@
-#  основной файл игры
-import pygame as pg
+# основной класс игры
+
 import sys
 from settings import *  # обращаемся к нашему файлу settings.py
-from map import * # обращаемся к нашему файлу map.py
+from map import *  # обращаемся к нашему файлу map.py
+
 
 class Game:
     """
     Основной класс игры DoomPY.
     :return:
     """
-
     def __init__(self):  # метод инициализации объектов
         pg.init()  # инициализируем сюда методы pygame
         self.screen = pg.display.set_mode(RES)  # обратимся к переменной из settings.py
         self.clock = pg.time.Clock()  # вызываем часы
+        self.delta_time = 1  # чтобы скорость игрока не зависела от скорости чистоты кадров
+        self.new_game()
 
     def new_game(self):
         """
         Метод новой_игры DoomPY.
         :return:
         """
+        self.map = Map(self)  # вызываем карту
 
     def update(self):
         """
@@ -28,7 +31,7 @@ class Game:
         :return:
         """
         pg.display.flip()
-        self.clock.tick(FPS)  # обратимся к переменной из settings.py
+        self.delta_time = self.clock.tick(FPS)  # обратимся к переменной из settings.py
         pg.display.set_caption(f'{self.clock.get_fps() :.1f}')
 
     def draw(self):
@@ -37,6 +40,7 @@ class Game:
         :return:
         """
         self.screen.fill('black')  # черный экран
+        self.map.draw()
 
     def check_events(self):
         """
@@ -63,5 +67,4 @@ class Game:
 
 if __name__ == '__main__':  # вызываем экземпляр нашего класса
     game = Game()
-    game.run
-
+    game.run()

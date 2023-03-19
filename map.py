@@ -20,8 +20,9 @@ class Map:
     Класс карты игры DoomPY.
     :return:
     """
-    def __init__(self, gane):
-        self.gane = game
+
+    def __init__(self, game):
+        self.game = game
         self.mini_map = mini_map
         self.world_map = {}
         self.get_map()
